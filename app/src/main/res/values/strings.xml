@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Evaluaciones</string>
+    <string name="strUsuario">Usuario</string>
+    <string name="strPassword">Contraseña</string>
+    <string name="strIngresar">Iniciar Sesion</string>
+    <string name="strIngresarCib">Iniciar Sesion con un correo Institucional</string>
+    <string name="strIngresarFb">Iniciar Sesión con una cuenta de Facebook</string>
 </resources>
