@@ -26,13 +26,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/strIngresarCib"
-            android:id="@+id/btnCib" />
+            android:id="@+id/btnCib"
+            android:textColor="@android:color/white" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/strIngresarFb"
-            android:id="@+id/button3" />
+            android:id="@+id/button3"
+            android:textColor="@android:color/white" />
 
     </LinearLayout>
 </RelativeLayout>

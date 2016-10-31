@@ -1,8 +1,16 @@
 <resources>
     <string name="app_name">Evaluaciones</string>
-    <string name="strUsuario">Usuario</string>
-    <string name="strPassword">Contraseña</string>
-    <string name="strIngresar">Iniciar Sesion</string>
+    <string name="login_name">Iniciar Sesion</string>
+
+    <!-- LOGIN MENU -->
     <string name="strIngresarCib">Iniciar Sesion con un correo Institucional</string>
     <string name="strIngresarFb">Iniciar Sesión con una cuenta de Facebook</string>
+    <!-- LOGIN DIALOG ALERT -->
+    <string name="strInfoText">Necesitas tener una cuenta creada para iniciar sesión en la aplicación</string>
+    <string name="strCrear">Crear Cuenta</string>
+    <string name="strUsuario">Usuario</string>
+    <string name="strPassword">Contraseña</string>
+    <string name="strRecordarCheck">Recordarme</string>
+    <string name="strOlvidarPwd">¿Olvidaste tu contraseña?</string>
+    <string name="strIngresar">Iniciar Sesion</string>
 </resources>

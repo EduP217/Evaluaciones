@@ -2,10 +2,35 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+    </style>
+
+    <!-- Base application theme. -->
+    <style name="Base.Theme" parent="Theme.AppCompat.Light.DarkActionBar">
+
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/primary</item>
+        <item name="colorControlActivated">@color/light</item>
+        <item name="colorControlHighlight">@color/light</item>
+        <item name="colorButtonNormal">@color/primary</item>
+
+    </style>
+
+    <!-- Edu application theme. -->
+    <style name="Edu.Theme" parent="Theme.AppCompat.Light.DarkActionBar">
+
+        <item name="colorPrimary">@color/eduprimary</item>
+        <item name="colorPrimaryDark">@color/eduprimary_dark</item>
+        <item name="colorAccent">@color/eduprimary</item>
+        <item name="colorControlActivated">@color/edulight</item>
+        <item name="colorControlHighlight">@color/edulight</item>
+        <item name="colorButtonNormal">@color/eduprimary</item>
+
     </style>
 
 </resources>

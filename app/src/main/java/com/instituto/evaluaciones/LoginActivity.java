@@ -1,10 +1,13 @@
 package com.instituto.evaluaciones;
 
-import android.support.v7.app.AlertDialog;
+import android.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
+import com.instituto.evaluaciones.dialogos.LoginDialog;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -12,6 +15,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void iniciarComponentes(){
         btnIniciarCibertec = (Button) findViewById(R.id.btnCib);
+        btnIniciarCibertec.setOnClickListener(this);
     }
 
     @Override
@@ -24,9 +28,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
         if(view == btnIniciarCibertec){
-            AlertDialog.Builder form = new AlertDialog.Builder(this);
-            form.setMessage("Iniciar Sesion");
-            form.show();
+            FragmentManager fragmentManager = getFragmentManager();
+            new LoginDialog().show(fragmentManager, "LoginDialog");
         }
     }
 }
