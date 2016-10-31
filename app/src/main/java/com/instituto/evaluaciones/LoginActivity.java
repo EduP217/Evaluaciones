@@ -24,7 +24,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
         if(view == btnIniciarCibertec){
-
+            AlertDialog.Builder form = new AlertDialog.Builder(this);
+            form.setMessage("Iniciar Sesion");
+            form.show();
         }
     }
 }
