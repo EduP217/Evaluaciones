@@ -14,7 +14,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    //private bdconexion db;
+    private bdconexion db;
     String nombre = "";
 
     @Override
@@ -22,8 +22,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /*db = new bdconexion(this);
-        beanUsuario obj = new beanUsuario();
+        db = new bdconexion(this);
+        /*beanUsuario obj = new beanUsuario();
         obj.setNombre("Eduardo");
         obj.setApellido("Prieto");
         obj.setUser("i201111156");
