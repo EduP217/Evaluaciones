@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.instituto.evaluaciones.beans.beanUsuario;
@@ -15,39 +16,59 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private bdconexion db;
-    String nombre = "";
+    TextView txtUsuario;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
+    private void iniciarComponentes(){
         db = new bdconexion(this);
-        /*beanUsuario obj = new beanUsuario();
+        txtUsuario = (TextView) findViewById(R.id.txtUsuario);
+
+    }
+
+    private void poblarUsuario(){
+        beanUsuario obj = new beanUsuario();
         obj.setNombre("Eduardo");
         obj.setApellido("Prieto");
         obj.setUser("i201111156");
         obj.setPwd("123456");
         obj.setEstado(1);
         db.insertUsuario(obj);
+    }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        iniciarComponentes();
+        poblarUsuario();
+
+        //LISTA EN EL LOG TODOS LOS USUARIOS REGISTRADOS EN LA BD
         List<beanUsuario> list = db.loadUsuario();
         for(beanUsuario bean:list){
-            Log.i("----> Base de datos: ",bean.getNombre()+" "+bean.getApellido().toString());
-        }*/
+            Log.i("----> Base de datos: ",bean.getNombre()+" "+bean.getApellido());
+        }
 
-        if (savedInstanceState == null) {
+        //RECUPERAR EL INTENT "IR"
+        Intent re = getIntent();
+        if (re.getSerializableExtra("obj") != null) {
+            beanUsuario usuario = (beanUsuario) re.getSerializableExtra("obj");
+            txtUsuario.setText(usuario.getApellido()+", "+usuario.getNombre());
+        } else {
+            goLoginScreen();
+        }
+
+        /*if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if(extras == null) {
                 goLoginScreen();
             } else {
                 nombre= extras.getString("BeanNombre");
                 Log.i("Main->extras",nombre);
+                txtUsuario.setText(nombre);
             }
         } else {
-            nombre= (String) savedInstanceState.getSerializable("BeanNombre");
-            Log.i("Main->Instance",nombre);
-        }
+            //nombre= (String) savedInstanceState.getSerializable("BeanNombre");
+            //Log.i("Main->Instance",nombre);
+        }*/
 
     }
 

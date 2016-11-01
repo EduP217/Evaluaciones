@@ -11,17 +11,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.instituto.evaluaciones.LoginActivity;
 import com.instituto.evaluaciones.MainActivity;
 import com.instituto.evaluaciones.R;
 import com.instituto.evaluaciones.beans.beanUsuario;
 import com.instituto.evaluaciones.conexion.bdconexion;
 
-import java.util.List;
-import java.util.Objects;
+import java.io.Serializable;
+
 
 /**
  * Created by eprieto on 31/10/2016.
@@ -69,10 +66,10 @@ public class LoginDialog extends DialogFragment {
                 String pass = edtPass.getText().toString();
 
                 beanUsuario bean = db.buscarUsuario(user,pass);
-                Log.i("LoginDialog->metodo",bean.getNombre()+" "+bean.getApellido().toString());
+                Log.i("LoginDialog->metodo",bean.getNombre()+" "+bean.getApellido());
 
                 Intent i = new Intent(getActivity(), MainActivity.class);
-                i.putExtra("BeanNombre",bean.getNombre());
+                i.putExtra("obj", bean);
                 startActivity(i);
 
             }
