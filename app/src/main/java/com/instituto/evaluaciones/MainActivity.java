@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         obj.setPwd("123456");
         obj.setEstado(1);
         db.insertUsuario(obj);
+        //->
     }
 
     @Override
