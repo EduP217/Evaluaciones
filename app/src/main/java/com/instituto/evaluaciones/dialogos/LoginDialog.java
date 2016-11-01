@@ -16,6 +16,7 @@ import com.instituto.evaluaciones.MainActivity;
 import com.instituto.evaluaciones.R;
 import com.instituto.evaluaciones.beans.beanUsuario;
 import com.instituto.evaluaciones.conexion.bdconexion;
+import com.instituto.evaluaciones.util.backgroundWorker;
 
 import java.io.Serializable;
 
@@ -64,13 +65,17 @@ public class LoginDialog extends DialogFragment {
             public void onClick(View view) {
                 String user = edtUser.getText().toString();
                 String pass = edtPass.getText().toString();
+                String type = "login";
 
-                beanUsuario bean = db.buscarUsuario(user,pass);
+                backgroundWorker backWrk = new backgroundWorker(getActivity());
+                backWrk.execute(type,user,pass);
+
+                /*beanUsuario bean = db.buscarUsuario(user,pass);
                 Log.i("LoginDialog->metodo",bean.getNombre()+" "+bean.getApellido());
 
                 Intent i = new Intent(getActivity(), MainActivity.class);
                 i.putExtra("obj", bean);
-                startActivity(i);
+                startActivity(i);*/
 
             }
         });

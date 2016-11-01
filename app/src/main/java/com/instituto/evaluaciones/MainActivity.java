@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void poblarUsuario(){
+    /*private void poblarUsuario(){
         beanUsuario obj = new beanUsuario();
         obj.setNombre("Eduardo");
         obj.setApellido("Prieto");
@@ -33,20 +33,20 @@ public class MainActivity extends AppCompatActivity {
         obj.setEstado(1);
         db.insertUsuario(obj);
         //->
-    }
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         iniciarComponentes();
-        poblarUsuario();
+        //poblarUsuario();
 
         //LISTA EN EL LOG TODOS LOS USUARIOS REGISTRADOS EN LA BD
-        List<beanUsuario> list = db.loadUsuario();
+        /*List<beanUsuario> list = db.loadUsuario();
         for(beanUsuario bean:list){
             Log.i("----> Base de datos: ",bean.getNombre()+" "+bean.getApellido());
-        }
+        }*/
 
         //RECUPERAR EL INTENT "IR"
         Intent re = getIntent();
