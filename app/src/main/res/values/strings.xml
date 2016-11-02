@@ -13,4 +13,5 @@
     <string name="strRecordarCheck">Recordarme</string>
     <string name="strOlvidarPwd">¿Olvidaste tu contraseña?</string>
     <string name="strIngresar">Iniciar Sesion</string>
+    <string name="strBienvenido">Bienvenido</string>
 </resources>

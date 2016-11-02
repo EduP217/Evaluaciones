@@ -9,4 +9,21 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.instituto.evaluaciones.MainActivity">
 
+    <TextView
+        android:text="@string/strBienvenido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="38dp"
+        android:id="@+id/textView2" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="19dp"
+        android:id="@+id/txtUsuario" />
 </RelativeLayout>

@@ -1,9 +1,11 @@
 package com.instituto.evaluaciones.beans;
 
+import java.io.Serializable;
+
 /**
  * Created by eprieto on 31/10/2016.
  */
-public class beanUsuario {
+public class beanUsuario implements Serializable {
 
     private int codigo;
     private String nombre;
