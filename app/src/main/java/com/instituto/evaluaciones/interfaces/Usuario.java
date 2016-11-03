@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * Created by Edu on 01/11/2016.
  */
 
-public class daoUsuario {
+public class Usuario {
     /*
     //OBTENER UN REGISTRO
     public beanUsuario buscarUsuario(String userparam, String pwdparam){

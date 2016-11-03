@@ -16,12 +16,12 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private bdconexion db;
-    TextView txtUsuario;
+    private TextView txtUsuario;
+    private beanUsuario usuario;
 
     private void iniciarComponentes(){
         db = new bdconexion(this);
         txtUsuario = (TextView) findViewById(R.id.txtUsuario);
-
     }
 
     /*private void poblarUsuario(){
@@ -49,28 +49,28 @@ public class MainActivity extends AppCompatActivity {
         }*/
 
         //RECUPERAR EL INTENT "IR"
-        Intent re = getIntent();
+        /*Intent re = getIntent();
         if (re.getSerializableExtra("obj") != null) {
-            beanUsuario usuario = (beanUsuario) re.getSerializableExtra("obj");
+            usuario = (beanUsuario) re.getSerializableExtra("obj");
             txtUsuario.setText(usuario.getApellido()+", "+usuario.getNombre());
         } else {
             goLoginScreen();
-        }
-
-        /*if (savedInstanceState == null) {
-            Bundle extras = getIntent().getExtras();
-            if(extras == null) {
-                goLoginScreen();
-            } else {
-                nombre= extras.getString("BeanNombre");
-                Log.i("Main->extras",nombre);
-                txtUsuario.setText(nombre);
-            }
-        } else {
-            //nombre= (String) savedInstanceState.getSerializable("BeanNombre");
-            //Log.i("Main->Instance",nombre);
         }*/
 
+        if (savedInstanceState == null) {
+            goLoginScreen();
+        } else {
+            usuario= (beanUsuario) savedInstanceState.getSerializable("Saved");
+            txtUsuario.setText(usuario.getNombre());
+            Log.i("Main->Instance",usuario.getNombre());
+        }
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putSerializable("Saved",usuario);
+        super.onSaveInstanceState(savedInstanceState);
     }
 
     private void goLoginScreen() {
