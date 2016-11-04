@@ -12,7 +12,9 @@ public class beanUsuario implements Serializable {
     private String apellido;
     private String user;
     private String pwd;
+    private String urlImagen;
     private int estado;
+    private String perfil;
 
     public int getCodigo() {
         return codigo;
@@ -60,5 +62,21 @@ public class beanUsuario implements Serializable {
 
     public void setEstado(int estado) {
         this.estado = estado;
+    }
+
+    public String getUrlImagen() {
+        return urlImagen;
+    }
+
+    public void setUrlImagen(String urlImagen) {
+        this.urlImagen = urlImagen;
+    }
+
+    public String getPerfil() {
+        return perfil;
+    }
+
+    public void setPerfil(String perfil) {
+        this.perfil = perfil;
     }
 }

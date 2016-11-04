@@ -49,21 +49,21 @@ public class MainActivity extends AppCompatActivity {
         }*/
 
         //RECUPERAR EL INTENT "IR"
-        /*Intent re = getIntent();
+        Intent re = getIntent();
         if (re.getSerializableExtra("obj") != null) {
             usuario = (beanUsuario) re.getSerializableExtra("obj");
-            txtUsuario.setText(usuario.getApellido()+", "+usuario.getNombre());
+            txtUsuario.setText(usuario.getUser()+" - "+usuario.getPerfil());
         } else {
             goLoginScreen();
-        }*/
+        }
 
-        if (savedInstanceState == null) {
+        /*if (savedInstanceState == null) {
             goLoginScreen();
         } else {
             usuario= (beanUsuario) savedInstanceState.getSerializable("Saved");
             txtUsuario.setText(usuario.getNombre());
             Log.i("Main->Instance",usuario.getNombre());
-        }
+        }*/
 
     }
 

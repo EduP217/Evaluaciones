@@ -14,4 +14,7 @@
     <string name="strOlvidarPwd">¿Olvidaste tu contraseña?</string>
     <string name="strIngresar">Iniciar Sesion</string>
     <string name="strBienvenido">Bienvenido</string>
+    <string name="strUsuarioLogin">Usuario</string>
+    <string name="strPerfilLogin">Perfil</string>
+    <string name="strAceptar">Aceptar</string>
 </resources>

@@ -69,14 +69,6 @@ public class LoginDialog extends DialogFragment {
 
                 backgroundWorker backWrk = new backgroundWorker(getActivity());
                 backWrk.execute(type,user,pass);
-
-                /*beanUsuario bean = db.buscarUsuario(user,pass);
-                Log.i("LoginDialog->metodo",bean.getNombre()+" "+bean.getApellido());
-
-                Intent i = new Intent(getActivity(), MainActivity.class);
-                i.putExtra("obj", bean);
-                startActivity(i);*/
-
             }
         });
 
