@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.instituto.evaluaciones.MainActivity;
 import com.instituto.evaluaciones.R;
 import com.instituto.evaluaciones.beans.beanUsuario;
+import com.instituto.evaluaciones.dao.daoUsuario;
 import com.instituto.evaluaciones.dialogos.LoginDialog;
 
 import java.io.BufferedReader;
@@ -47,9 +48,11 @@ public class backgroundWorker extends AsyncTask<String,Void,String> {
     AlertDialog alertDialog;
     View v;
     beanUsuario bean = null;
+    daoUsuario dao;
 
     public backgroundWorker(Context contexto) {
         this.contexto = contexto;
+        dao = new daoUsuario(contexto);
     }
 
     @Override
@@ -105,12 +108,6 @@ public class backgroundWorker extends AsyncTask<String,Void,String> {
         LayoutInflater inflater = (LayoutInflater) contexto.getSystemService(contexto.LAYOUT_INFLATER_SERVICE);
         v = inflater.inflate(R.layout.dialog_login_success,null);
         alertDialog.setView(v);
-        /*alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "Aceptar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });*/
     }
 
     @Override
@@ -132,24 +129,30 @@ public class backgroundWorker extends AsyncTask<String,Void,String> {
                 }
             });
         } else if(resultado.equals("login success")){
-            String codigo = resultarray[1];
-            String usuario = resultarray[2];
-            final String contraseña = resultarray[3];
-            String estado = resultarray[4];
-            String urlImagen = resultarray[5];
-            String perfil = resultarray[6];
+            String codigo   = resultarray[1];
+            String nombre   = resultarray[2];
+            String apellido = resultarray[3];
+            String usuario  = resultarray[4];
+            String contraseña = resultarray[5];
+            String estado   = resultarray[6];
+            String urlImagen = resultarray[7];
+            String perfil   = resultarray[8];
 
-            txtUsuario.setText(usuario);
+            txtUsuario.setText(apellido+", "+nombre);
             txtPerfil.setText(perfil);
 
             bean = new beanUsuario();
             bean.setCodigo(Integer.parseInt(codigo));
+            bean.setNombre(nombre);
+            bean.setApellido(apellido);
             bean.setUser(usuario);
             bean.setPwd(contraseña);
             bean.setEstado(Integer.parseInt(estado));
             bean.setUrlImagen(urlImagen);
             bean.setPerfil(perfil);
 
+            dao.insertUsuario(bean);
+            Log.i("--->bd","Se importó el usuario con éxito");
             /*String url = "http://institutoevaluaciones.pe.hu/Images/avatar-user.png";
             try {
                 URL imageUrl = new URL(url);

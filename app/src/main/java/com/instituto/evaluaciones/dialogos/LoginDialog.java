@@ -16,6 +16,7 @@ import com.instituto.evaluaciones.MainActivity;
 import com.instituto.evaluaciones.R;
 import com.instituto.evaluaciones.beans.beanUsuario;
 import com.instituto.evaluaciones.conexion.bdconexion;
+import com.instituto.evaluaciones.dao.daoUsuario;
 import com.instituto.evaluaciones.util.backgroundWorker;
 
 import java.io.Serializable;
@@ -27,8 +28,10 @@ import java.io.Serializable;
 public class LoginDialog extends DialogFragment {
 
     private static final String TAG = LoginDialog.class.getSimpleName();
+    private daoUsuario dao;
 
     public LoginDialog() {
+
     }
 
     @Override
@@ -38,26 +41,17 @@ public class LoginDialog extends DialogFragment {
 
     private AlertDialog createLoginDialogo() {
 
-        final bdconexion db = new bdconexion(getActivity());
+        dao = new daoUsuario(getActivity());
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View v = inflater.inflate(R.layout.login_user,null);
         builder.setView(v);
 
-        Button signup = (Button) v.findViewById(R.id.btnCrearCuenta);
         Button signin = (Button) v.findViewById(R.id.btnIngresar);
 
         final EditText edtUser = (EditText) v.findViewById(R.id.edtUser);
         final EditText edtPass = (EditText) v.findViewById(R.id.edtPwd);
-
-        //CREAR CUENTA
-        signup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dismiss();
-            }
-        });
 
         //LOGUEAR
         signin.setOnClickListener(new View.OnClickListener() {
@@ -67,8 +61,18 @@ public class LoginDialog extends DialogFragment {
                 String pass = edtPass.getText().toString();
                 String type = "login";
 
-                backgroundWorker backWrk = new backgroundWorker(getActivity());
-                backWrk.execute(type,user,pass);
+                beanUsuario obj = dao.buscarUsuario(user,pass);
+                if(obj!=null){
+                    Log.i("-->"+TAG,"Usuario Local");
+                    Intent i = new Intent(getActivity(), MainActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtra("obj", obj);
+                    startActivity(i);
+                } else {
+                    Log.i("-->"+TAG,"Importando Usuario");
+                    backgroundWorker backWrk = new backgroundWorker(getActivity());
+                    backWrk.execute(type, user, pass);
+                }
             }
         });
 

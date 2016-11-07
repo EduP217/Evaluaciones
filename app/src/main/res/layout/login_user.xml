@@ -17,7 +17,7 @@
         android:text="@string/strInfoText"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
-    <Button
+    <!--Button
         android:id="@+id/btnCrearCuenta"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,13 +26,13 @@
         android:paddingBottom="@dimen/button_padding"
         android:paddingTop="@dimen/button_padding"
         android:text="@string/strCrear"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white" /-->
 
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@+id/btnCrearCuenta"
+        android:layout_below="@+id/info_text"
         android:layout_marginBottom="@dimen/padding_between"
         android:layout_marginTop="@dimen/padding_between"
         android:background="#C8C9CB" />
@@ -66,7 +66,7 @@
         android:padding="@dimen/edit_text_padding"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
-    <CheckBox
+    <!--CheckBox
         android:id="@+id/recordar_check"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
         android:layout_alignStart="@+id/edtPwd"
         android:layout_below="@+id/edtPwd"
         android:checked="false"
-        android:text="@string/strRecordarCheck" />
+        android:text="@string/strRecordarCheck" /-->
 
     <TextView
         android:id="@+id/txtOlvidar"
@@ -82,7 +82,7 @@
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/edtPwd"
         android:layout_alignRight="@+id/edtPwd"
-        android:layout_below="@+id/recordar_check"
+        android:layout_below="@+id/edtPwd"
         android:paddingTop="@dimen/padding_between"
         android:text="@string/strOlvidarPwd"
         android:textAppearance="?android:attr/textAppearanceSmall" />

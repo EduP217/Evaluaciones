@@ -7,4 +7,5 @@
     <dimen name="edit_text_padding">16dp</dimen>
     <dimen name="normal_padding">8dp</dimen>
     <dimen name="button_padding">24dp</dimen>
+    <dimen name="navigation_drawer_width">240dp</dimen>
 </resources>

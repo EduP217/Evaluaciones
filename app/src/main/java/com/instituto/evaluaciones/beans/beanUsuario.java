@@ -12,8 +12,8 @@ public class beanUsuario implements Serializable {
     private String apellido;
     private String user;
     private String pwd;
-    private String urlImagen;
     private int estado;
+    private String urlImagen;
     private String perfil;
 
     public int getCodigo() {
@@ -79,4 +79,7 @@ public class beanUsuario implements Serializable {
     public void setPerfil(String perfil) {
         this.perfil = perfil;
     }
+
+
+
 }
