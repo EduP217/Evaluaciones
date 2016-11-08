@@ -2,27 +2,18 @@ package com.instituto.evaluaciones.util;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Rect;
 import android.os.AsyncTask;
-import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.instituto.evaluaciones.MainActivity;
 import com.instituto.evaluaciones.R;
 import com.instituto.evaluaciones.beans.beanUsuario;
 import com.instituto.evaluaciones.dao.daoUsuario;
-import com.instituto.evaluaciones.dialogos.LoginDialog;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -35,8 +26,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Edu on 01/11/2016.

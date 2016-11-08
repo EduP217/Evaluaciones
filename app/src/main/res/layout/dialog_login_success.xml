@@ -11,7 +11,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/imgAvatar"
+            android:id="@+id/img"
             android:layout_width="85dp"
             android:layout_height="match_parent"
             app:srcCompat="@drawable/logo_cibertec"

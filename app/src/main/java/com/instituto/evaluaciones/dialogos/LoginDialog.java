@@ -2,7 +2,6 @@ package com.instituto.evaluaciones.dialogos;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -15,11 +14,8 @@ import android.widget.EditText;
 import com.instituto.evaluaciones.MainActivity;
 import com.instituto.evaluaciones.R;
 import com.instituto.evaluaciones.beans.beanUsuario;
-import com.instituto.evaluaciones.conexion.bdconexion;
 import com.instituto.evaluaciones.dao.daoUsuario;
 import com.instituto.evaluaciones.util.backgroundWorker;
-
-import java.io.Serializable;
 
 
 /**

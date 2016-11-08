@@ -17,4 +17,11 @@
     <string name="strUsuarioLogin">Usuario</string>
     <string name="strPerfilLogin">Perfil</string>
     <string name="strAceptar">Aceptar</string>
+
+    <!--MAIN MENU-->
+    <string name="title_activity_main">Menú Principal</string>
+    <string name="navigation_drawer_open">Abrir Menú</string>
+    <string name="navigation_drawer_close">Cerrar Menú</string>
+    <string name="action_settings">Configuración</string>
+
 </resources>
