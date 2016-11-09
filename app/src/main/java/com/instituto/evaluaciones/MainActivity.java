@@ -1,9 +1,15 @@
 package com.instituto.evaluaciones;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,14 +19,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 import com.instituto.evaluaciones.beans.beanUsuario;
 import com.instituto.evaluaciones.conexion.bdconexion;
+import com.instituto.evaluaciones.util.backgroundImage;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,View.OnClickListener{
 
     private bdconexion db;
     private beanUsuario usuario;
+    private ImageView imgAvatar;
+    Bitmap avatar;
     /*---MENÚ DESPLEGABLE---*/
     Toolbar toolbar;
     FloatingActionButton fab;
@@ -30,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void iniciarComponentes(){
         db = new bdconexion(this);
+        imgAvatar = (ImageView) findViewById(R.id.imgAvatar);
         /*--MENÚ DESPLEGABLE--*/
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -53,6 +70,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Intent re = getIntent();
         if (re.getSerializableExtra("obj") != null) {
             usuario = (beanUsuario) re.getSerializableExtra("obj");
+            avatar = mostrarAvatar(usuario.getUrlImagen());
+            if(avatar!=null)
+                imgAvatar.setImageBitmap(avatar);
         } else {
             goLoginScreen();
         }
@@ -123,9 +143,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    private Bitmap mostrarAvatar(String urlImagen) {
+        Bitmap xavatar = null;
+        String path = "/data/user/0/com.instituto.evaluaciones/app_Imagenes/"+urlImagen;
+        try{
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+            xavatar = BitmapFactory.decodeFile(path,options);
+        } catch (Exception ex){
+            Log.e("-->Error",ex.toString());
+        }
+
+        if(xavatar == null) {
+            backgroundImage hilo = new backgroundImage(this);
+            hilo.execute(urlImagen);
+            try{
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+                xavatar = BitmapFactory.decodeFile(path,options);
+            } catch (Exception ex){
+                Log.e("-->Error",ex.toString());
+            }
+        }
+        return xavatar;
+    }
     private void goLoginScreen() {
         Intent intent = new Intent(this,LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
+
 }

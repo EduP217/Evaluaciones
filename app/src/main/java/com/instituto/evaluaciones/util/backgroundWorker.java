@@ -1,6 +1,7 @@
 package com.instituto.evaluaciones.util;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -34,8 +35,8 @@ import java.net.URLEncoder;
 public class backgroundWorker extends AsyncTask<String,Void,String> {
 
     Context contexto;
+    ProgressDialog pd;
     AlertDialog alertDialog;
-    View v;
     beanUsuario bean = null;
     daoUsuario dao;
 
@@ -91,16 +92,25 @@ public class backgroundWorker extends AsyncTask<String,Void,String> {
 
     @Override
     protected void onPreExecute() {
-        alertDialog = new AlertDialog.Builder(contexto).create();
-        alertDialog.setTitle(R.string.strBienvenido);
-        alertDialog.setCancelable(false);
-        LayoutInflater inflater = (LayoutInflater) contexto.getSystemService(contexto.LAYOUT_INFLATER_SERVICE);
-        v = inflater.inflate(R.layout.dialog_login_success,null);
-        alertDialog.setView(v);
+        pd = new ProgressDialog(contexto);
+        pd.setTitle("Bienvenido");
+        pd.setCancelable(false);
+        pd.setMessage("Iniciando Sesión");
+        pd.setMax(20);
+        pd.show();
     }
 
     @Override
     protected void onPostExecute(String result) {
+        pd.dismiss();
+
+        alertDialog = new AlertDialog.Builder(contexto).create();
+        alertDialog.setTitle(R.string.strBienvenido);
+        alertDialog.setCancelable(false);
+        LayoutInflater inflater = (LayoutInflater) contexto.getSystemService(contexto.LAYOUT_INFLATER_SERVICE);
+        View v = inflater.inflate(R.layout.dialog_login_success,null);
+        alertDialog.setView(v);
+
         final TextView txtUsuario = (TextView) v.findViewById(R.id.txtUser);
         final TextView txtPerfil = (TextView) v.findViewById(R.id.txtPerfil);
         final Button btnAceptar = (Button) v.findViewById(R.id.btnAceptarLogin);
@@ -142,21 +152,7 @@ public class backgroundWorker extends AsyncTask<String,Void,String> {
 
             dao.insertUsuario(bean);
             Log.i("--->bd","Se importó el usuario con éxito");
-            /*String url = "http://institutoevaluaciones.pe.hu/Images/avatar-user.png";
-            try {
-                URL imageUrl = new URL(url);
-                HttpURLConnection conn = (HttpURLConnection) imageUrl.openConnection();
-                conn.connect();
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inSampleSize = 2;
-                Bitmap imagen = BitmapFactory.decodeStream(conn.getInputStream(),new Rect(0,0,0,0),options);
-                avatar.setImageBitmap(imagen);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            Log.i("-->img",url);*/
+
             btnAceptar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -177,4 +173,5 @@ public class backgroundWorker extends AsyncTask<String,Void,String> {
     protected void onProgressUpdate(Void... values) {
         super.onProgressUpdate(values);
     }
+
 }
