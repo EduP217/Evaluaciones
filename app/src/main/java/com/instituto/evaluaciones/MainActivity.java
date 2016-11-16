@@ -1,15 +1,23 @@
 package com.instituto.evaluaciones;
 
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.icu.util.IslamicCalendar;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,23 +28,37 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.instituto.evaluaciones.beans.beanUsuario;
 import com.instituto.evaluaciones.conexion.bdconexion;
 import com.instituto.evaluaciones.util.backgroundImage;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.StringReader;
+import java.lang.reflect.Field;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,View.OnClickListener{
 
     private bdconexion db;
     private beanUsuario usuario;
     private ImageView imgAvatar;
-    Bitmap avatar;
+    private TextView txtuserMenu;
+    private TextView txtperfMenu;
+    LayoutInflater inflater = (LayoutInflater) this.getSystemService(this.LAYOUT_INFLATER_SERVICE);
+    View v = inflater.inflate(R.layout.nav_header_main,null);
     /*---MENÚ DESPLEGABLE---*/
     Toolbar toolbar;
     FloatingActionButton fab;
@@ -46,10 +68,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void iniciarComponentes(){
         db = new bdconexion(this);
-        imgAvatar = (ImageView) findViewById(R.id.imgAvatar);
         /*--MENÚ DESPLEGABLE--*/
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        imgAvatar = (ImageView) findViewById(R.id.imgAvatar);
+        txtuserMenu = (TextView) v.findViewById(R.id.txtUser_Menu);
+        txtperfMenu = (TextView) v.findViewById(R.id.txtPerfil_Menu);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(this);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -70,9 +94,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Intent re = getIntent();
         if (re.getSerializableExtra("obj") != null) {
             usuario = (beanUsuario) re.getSerializableExtra("obj");
-            avatar = mostrarAvatar(usuario.getUrlImagen());
-            if(avatar!=null)
-                imgAvatar.setImageBitmap(avatar);
+            txtuserMenu.setText(usuario.getApellido()+" "+usuario.getNombre());
+            txtperfMenu.setText(usuario.getPerfil());
         } else {
             goLoginScreen();
         }
@@ -90,19 +113,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -113,20 +130,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_main) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_download) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_upload) {
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_work) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_setting) {
+
+        } else if (id == R.id.nav_logout) {
 
         }
 
@@ -143,30 +159,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    private Bitmap mostrarAvatar(String urlImagen) {
-        Bitmap xavatar = null;
-        String path = "/data/user/0/com.instituto.evaluaciones/app_Imagenes/"+urlImagen;
-        try{
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-            xavatar = BitmapFactory.decodeFile(path,options);
+    private void mostrarAvatar(String urlImagen) throws IOException {
+        backgroundImage bI = new backgroundImage(this);
+        bI.execute(urlImagen);
+        /*try{
+            ContextWrapper cw = new ContextWrapper(this);
+            File dirImages = cw.getDir("Imagenes", this.MODE_PRIVATE);
+            File myPath = new File(dirImages,urlImagen);
+            avatar = BitmapFactory.decodeFile(myPath.getAbsolutePath());
+            imgAvatar.setImageBitmap(avatar);
         } catch (Exception ex){
-            Log.e("-->Error",ex.toString());
-        }
-
-        if(xavatar == null) {
-            backgroundImage hilo = new backgroundImage(this);
-            hilo.execute(urlImagen);
-            try{
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-                xavatar = BitmapFactory.decodeFile(path,options);
-            } catch (Exception ex){
-                Log.e("-->Error",ex.toString());
-            }
-        }
-        return xavatar;
+            Log.e("-->No encontrado:",ex.toString());
+        }*/
     }
+
     private void goLoginScreen() {
         Intent intent = new Intent(this,LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);

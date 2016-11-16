@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Evaluaciones</string>
     <string name="login_name">Iniciar Sesion</string>
+    <string name="cerrar_sesion">Cerrar Sesión</string>
 
     <!-- LOGIN MENU -->
     <string name="strIngresarCib">Iniciar Sesion con un correo Institucional</string>
