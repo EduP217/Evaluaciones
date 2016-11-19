@@ -13,7 +13,9 @@ import android.widget.TextView;
 
 import com.instituto.evaluaciones.MainActivity;
 import com.instituto.evaluaciones.R;
+import com.instituto.evaluaciones.beans.BeanProfesor;
 import com.instituto.evaluaciones.beans.beanUsuario;
+import com.instituto.evaluaciones.dao.daoProfesor;
 import com.instituto.evaluaciones.dao.daoUsuario;
 
 import java.io.BufferedReader;
@@ -38,7 +40,9 @@ public class backgroundWorker extends AsyncTask<String,Void,String> {
     ProgressDialog pd;
     AlertDialog alertDialog;
     beanUsuario bean = null;
+    BeanProfesor beanProf = null;
     daoUsuario dao;
+    daoProfesor daoProf;
 
     public backgroundWorker(Context contexto) {
         this.contexto = contexto;
@@ -129,28 +133,35 @@ public class backgroundWorker extends AsyncTask<String,Void,String> {
             });
         } else if(resultado.equals("login success")){
             String codigo   = resultarray[1];
-            String nombre   = resultarray[2];
-            String apellido = resultarray[3];
-            String usuario  = resultarray[4];
-            String contraseña = resultarray[5];
-            String estado   = resultarray[6];
-            String urlImagen = resultarray[7];
-            String perfil   = resultarray[8];
+            String codProf = resultarray[2];
+            String nombre   = resultarray[3];
+            String apellido = resultarray[4];
+            String usuario  = resultarray[5];
+            String contraseña = resultarray[6];
+            String estado   = resultarray[7];
+            String urlImagen = resultarray[8];
+            String perfil   = resultarray[9];
 
             txtUsuario.setText(apellido+", "+nombre);
             txtPerfil.setText(perfil);
 
             bean = new beanUsuario();
             bean.setCodigo(Integer.parseInt(codigo));
-            bean.setNombre(nombre);
-            bean.setApellido(apellido);
             bean.setUser(usuario);
             bean.setPwd(contraseña);
             bean.setEstado(Integer.parseInt(estado));
             bean.setUrlImagen(urlImagen);
             bean.setPerfil(perfil);
 
+            beanProf = new BeanProfesor();
+            beanProf.setCodProfesor(codProf);
+            beanProf.setNomProfesor(nombre);
+            beanProf.setApeProfesor(apellido);
+            beanProf.setDni(usuario);
+
             dao.insertUsuario(bean);
+            daoProf.insertProfesor(beanProf);
+
             Log.i("--->bd","Se importó el usuario con éxito");
 
             btnAceptar.setOnClickListener(new View.OnClickListener() {
@@ -160,6 +171,7 @@ public class backgroundWorker extends AsyncTask<String,Void,String> {
                     Intent i = new Intent(contexto, MainActivity.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                     i.putExtra("obj", bean);
+                    i.putExtra("objProf", beanProf);
                     contexto.startActivity(i);
                 }
             });

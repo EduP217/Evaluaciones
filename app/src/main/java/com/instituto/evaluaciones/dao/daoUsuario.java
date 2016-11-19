@@ -35,13 +35,11 @@ public class daoUsuario {
             c.moveToFirst();
             bean = new beanUsuario();
             bean.setCodigo(c.getInt(0));
-            bean.setNombre(c.getString(1));
-            bean.setApellido(c.getString(2));
-            bean.setUser(c.getString(3));
-            bean.setPwd(c.getString(4));
-            bean.setEstado(c.getInt(5));
-            bean.setUrlImagen(c.getString(6));
-            bean.setPerfil(c.getString(7));
+            bean.setUser(c.getString(1));
+            bean.setPwd(c.getString(2));
+            bean.setEstado(c.getInt(3));
+            bean.setUrlImagen(c.getString(4));
+            bean.setPerfil(c.getString(5));
             c.close();
         }
         bd.closeDB();
@@ -55,8 +53,6 @@ public class daoUsuario {
         String[] campos =
                 new String[]{
                         bdconstants.USU_ID,
-                        bdconstants.USU_NOM,
-                        bdconstants.USU_APE,
                         bdconstants.USU_USU,
                         bdconstants.USU_PWD,
                         bdconstants.USU_EST,
@@ -69,13 +65,11 @@ public class daoUsuario {
             while (c.moveToNext()){
                 beanUsuario bean = new beanUsuario();
                 bean.setCodigo(c.getInt(0));
-                bean.setNombre(c.getString(1));
-                bean.setApellido(c.getString(2));
-                bean.setUser(c.getString(3));
-                bean.setPwd(c.getString(4));
-                bean.setEstado(c.getInt(5));
-                bean.setUrlImagen(c.getString(6));
-                bean.setPerfil(c.getString(7));
+                bean.setUser(c.getString(1));
+                bean.setPwd(c.getString(2));
+                bean.setEstado(c.getInt(3));
+                bean.setUrlImagen(c.getString(4));
+                bean.setPerfil(c.getString(5));
                 List.add(bean);
             }
         } finally {
@@ -88,8 +82,6 @@ public class daoUsuario {
 
     private ContentValues usuarioMapperContentValues(beanUsuario bean){
         ContentValues cv = new ContentValues();
-        cv.put(bdconstants.USU_NOM,bean.getNombre());
-        cv.put(bdconstants.USU_APE,bean.getApellido());
         cv.put(bdconstants.USU_USU,bean.getUser());
         cv.put(bdconstants.USU_PWD,bean.getPwd());
         cv.put(bdconstants.USU_EST,bean.getEstado());

@@ -9,6 +9,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.icu.util.IslamicCalendar;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -30,9 +31,11 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.instituto.evaluaciones.beans.BeanProfesor;
 import com.instituto.evaluaciones.beans.beanUsuario;
 import com.instituto.evaluaciones.conexion.bdconexion;
 import com.instituto.evaluaciones.util.backgroundImage;
+import com.instituto.evaluaciones.util.backgroundImportar;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -54,11 +57,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private bdconexion db;
     private beanUsuario usuario;
+    private BeanProfesor profesor;
     private ImageView imgAvatar;
     private TextView txtuserMenu;
     private TextView txtperfMenu;
-    LayoutInflater inflater = (LayoutInflater) this.getSystemService(this.LAYOUT_INFLATER_SERVICE);
-    View v = inflater.inflate(R.layout.nav_header_main,null);
     /*---MENÚ DESPLEGABLE---*/
     Toolbar toolbar;
     FloatingActionButton fab;
@@ -72,8 +74,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         imgAvatar = (ImageView) findViewById(R.id.imgAvatar);
-        txtuserMenu = (TextView) v.findViewById(R.id.txtUser_Menu);
-        txtperfMenu = (TextView) v.findViewById(R.id.txtPerfil_Menu);
+        txtuserMenu = (TextView) findViewById(R.id.txtUser_Menu);
+        txtperfMenu = (TextView) findViewById(R.id.txtPerfil_Menu);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(this);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -94,8 +96,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Intent re = getIntent();
         if (re.getSerializableExtra("obj") != null) {
             usuario = (beanUsuario) re.getSerializableExtra("obj");
-            txtuserMenu.setText(usuario.getApellido()+" "+usuario.getNombre());
-            txtperfMenu.setText(usuario.getPerfil());
+            profesor = (BeanProfesor) re.getSerializableExtra("objProf");
+            backgroundImportar bi = new backgroundImportar(this);
+            bi.execute();
         } else {
             goLoginScreen();
         }

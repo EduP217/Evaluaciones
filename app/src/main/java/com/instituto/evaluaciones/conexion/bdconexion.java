@@ -54,6 +54,7 @@ public class bdconexion {
         @Override
         public void onCreate(SQLiteDatabase bd) {
             bd.execSQL(bdconstants.TABLA_USUARIO_SQL);
+
         }
 
         @Override
