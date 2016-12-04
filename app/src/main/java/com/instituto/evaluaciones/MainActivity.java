@@ -1,22 +1,16 @@
 package com.instituto.evaluaciones;
 
-import android.content.Context;
-import android.content.ContextWrapper;
+import android.app.AlertDialog;
+import android.app.FragmentManager;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.icu.util.IslamicCalendar;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,59 +25,59 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.instituto.evaluaciones.Fragments.FirstFragment;
+import com.instituto.evaluaciones.Fragments.FourFragment;
+import com.instituto.evaluaciones.Fragments.SecondFragment;
+import com.instituto.evaluaciones.Fragments.SettingsFragment;
+import com.instituto.evaluaciones.Fragments.ThirdFragment;
 import com.instituto.evaluaciones.beans.BeanProfesor;
 import com.instituto.evaluaciones.beans.beanUsuario;
 import com.instituto.evaluaciones.conexion.bdconexion;
-import com.instituto.evaluaciones.util.backgroundImage;
+import com.instituto.evaluaciones.dao.daoUsuario;
 import com.instituto.evaluaciones.util.backgroundImportar;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.StringReader;
-import java.lang.reflect.Field;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,View.OnClickListener{
 
     private bdconexion db;
+    private daoUsuario dao;
     private beanUsuario usuario;
     private BeanProfesor profesor;
-    private ImageView imgAvatar;
-    private TextView txtuserMenu;
-    private TextView txtperfMenu;
+    Bitmap intentImage = null;
+    private ImageView imgMenu;
+    private TextView txtCodMenu;
+    private TextView txtNomMenu;
+    private TextView txtPerfMenu;
     /*---MENÚ DESPLEGABLE---*/
     Toolbar toolbar;
-    FloatingActionButton fab;
+    //FloatingActionButton fab;
     DrawerLayout drawer;
     ActionBarDrawerToggle toggle;
     NavigationView navigationView;
 
     private void iniciarComponentes(){
         db = new bdconexion(this);
+        dao = new daoUsuario(this);
         /*--MENÚ DESPLEGABLE--*/
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        imgAvatar = (ImageView) findViewById(R.id.imgAvatar);
-        txtuserMenu = (TextView) findViewById(R.id.txtUser_Menu);
-        txtperfMenu = (TextView) findViewById(R.id.txtPerfil_Menu);
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(this);
+        //fab = (FloatingActionButton) findViewById(R.id.fab);
+        //fab.setOnClickListener(this);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        /*---------------------*/
+        View nView =  navigationView.getHeaderView(0);
+        imgMenu = (ImageView) nView.findViewById(R.id.imgMenu);
+        txtCodMenu = (TextView) nView.findViewById(R.id.txtCodMenu);
+        txtNomMenu = (TextView) nView.findViewById(R.id.txtNomMenu);
+        txtPerfMenu = (TextView) nView.findViewById(R.id.txtPerfilMenu);
     }
 
     @Override
@@ -96,9 +90,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Intent re = getIntent();
         if (re.getSerializableExtra("obj") != null) {
             usuario = (beanUsuario) re.getSerializableExtra("obj");
-            profesor = (BeanProfesor) re.getSerializableExtra("objProf");
-            backgroundImportar bi = new backgroundImportar(this);
-            bi.execute();
+            try {
+                FileInputStream is = this.openFileInput(usuario.getUrlImagen());
+                intentImage = BitmapFactory.decodeStream(is);
+                is.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            imgMenu.setImageBitmap(intentImage);
+            if(re.getSerializableExtra("objProf")!=null){
+                profesor = (BeanProfesor) re.getSerializableExtra("objProf");
+                txtCodMenu.setText(profesor.getCodProfesor());
+                txtNomMenu.setText(profesor.getApeProfesor()+", "+profesor.getNomProfesor());
+                txtPerfMenu.setText(usuario.getPerfil());
+                if(dao.estadoSetting(profesor.getCodProfesor())!=0) {
+                    backgroundImportar importarEstaticos = new backgroundImportar(this);
+                    importarEstaticos.execute();
+                }
+            }
         } else {
             goLoginScreen();
         }
@@ -126,7 +135,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -134,19 +142,49 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
+        FragmentManager fragmentmanager = getFragmentManager();
+        Bundle bundle=new Bundle();
+        bundle.putSerializable("objprof", profesor);
 
         if (id == R.id.nav_main) {
-
+            bundle.putString("idprof", profesor.getCodProfesor() );
+            FirstFragment firstFragment=new FirstFragment();
+            firstFragment.setArguments(bundle);
+            fragmentmanager.beginTransaction().replace(R.id.content_frame,firstFragment).commit();
         } else if (id == R.id.nav_download) {
-
+            SecondFragment secondFragment=new SecondFragment();
+            secondFragment.setArguments(bundle);
+            fragmentmanager.beginTransaction().replace(R.id.content_frame,secondFragment).commit();
         } else if (id == R.id.nav_upload) {
-
+            ThirdFragment thirdFragment=new ThirdFragment();
+            thirdFragment.setArguments(bundle);
+            fragmentmanager.beginTransaction().replace(R.id.content_frame,thirdFragment).commit();
         } else if (id == R.id.nav_work) {
-
+            FourFragment fourtFragment=new FourFragment();
+            fourtFragment.setArguments(bundle);
+            fragmentmanager.beginTransaction().replace(R.id.content_frame,fourtFragment).commit();
         } else if (id == R.id.nav_setting) {
-
+            SettingsFragment settFragment = new SettingsFragment();
+            settFragment.setArguments(bundle);
+            fragmentmanager.beginTransaction().replace(R.id.content_frame,settFragment).commit();
         } else if (id == R.id.nav_logout) {
+            final AlertDialog.Builder builderLogOff = new AlertDialog.Builder(MainActivity.this);
+            builderLogOff.setTitle("Cerrar Sesión").setIcon(android.R.drawable.ic_menu_close_clear_cancel).setMessage("¿Estas seguro de salir de la sesión?").setCancelable(false);
+            builderLogOff.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent i = new Intent(getApplicationContext(),LoginActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(i);
+                }
+            });
+            builderLogOff.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
 
+                }
+            });
+            builderLogOff.show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -156,23 +194,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onClick(View v) {
-
-        if(v == fab){
+        /*if(v == fab){
             Snackbar.make(v, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-        }
-    }
-
-    private void mostrarAvatar(String urlImagen) throws IOException {
-        backgroundImage bI = new backgroundImage(this);
-        bI.execute(urlImagen);
-        /*try{
-            ContextWrapper cw = new ContextWrapper(this);
-            File dirImages = cw.getDir("Imagenes", this.MODE_PRIVATE);
-            File myPath = new File(dirImages,urlImagen);
-            avatar = BitmapFactory.decodeFile(myPath.getAbsolutePath());
-            imgAvatar.setImageBitmap(avatar);
-        } catch (Exception ex){
-            Log.e("-->No encontrado:",ex.toString());
         }*/
     }
 

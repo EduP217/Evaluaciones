@@ -9,7 +9,7 @@ import java.io.Serializable;
 public class BeanSeccion implements Serializable {
     private int seccionID;
     private String seccion;
-
+    private int codCiclo;
 
     public int getSeccionID() {
         return seccionID;
@@ -25,5 +25,18 @@ public class BeanSeccion implements Serializable {
 
     public void setSeccion(String seccion) {
         this.seccion = seccion;
+    }
+
+
+    public int getCodCiclo() {
+        return codCiclo;
+    }
+
+    public void setCodCiclo(int codCiclo) {
+        this.codCiclo = codCiclo;
+    }
+
+    public String toString(){
+        return seccion;
     }
 }

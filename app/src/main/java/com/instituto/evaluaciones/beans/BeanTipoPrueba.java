@@ -26,4 +26,8 @@ public class BeanTipoPrueba implements Serializable {
     public void setNomTipo(String nomTipo) {
         this.nomTipo = nomTipo;
     }
+
+    public String toString(){
+        return nomTipo;
+    }
 }

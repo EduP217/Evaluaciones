@@ -43,4 +43,5 @@ public class BeanProfesor implements Serializable {
     public void setDni(String dni) {
         this.dni = dni;
     }
+
 }

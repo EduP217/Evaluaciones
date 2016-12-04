@@ -10,6 +10,7 @@ public class bdconstants {
 
     //TABLA USUARIO
     public static final String TABLA_USUARIO = "usuario";
+    public static final String TABLA_USUARIO_SETT = "settingusu";
     public static final String TABLA_MODALIDAD = "modalidad";
     public static final String TABLA_CICLO = "ciclo";
     public static final String TABLA_TIPOPRUEBA = "tipoprueba";
@@ -19,6 +20,7 @@ public class bdconstants {
     public static final String TABLA_SECCION = "seccion";
     public static final String TABLA_ALUMNOS = "alumnos";
     public static final String TABLA_REGISTRONOTAS = "registro";
+    public static final String TABLA_DETALLEPROFASI = "detalleprofasign";
 
 
     public static final String USU_ID  = "codigo";
@@ -28,20 +30,26 @@ public class bdconstants {
     public static final String USU_URL = "urlImagen";
     public static final String USU_PERF = "perfil";
 
+    public static final String USU_SET_ID = "codUsuario";
+    public static final String USU_SET_VALUE = "valSetting";
+
     public static final String MOD_ID  = "codigo";
     public static final String MOD_DES = "modalidad";
 
     public static final String CICLO_ID  = "cicloID";
     public static final String CICLO_DES = "cicloDes";
+    public static final String CICLO_MOD = "cicloMod";
 
     public static final String SECCIONID  = "seccionID";
     public static final String NOMSECCION = "nomSeccion";
+    public static final String CICLSECCION = "codCiclo";
 
     public static final String TIPOID  = "tipoID";
     public static final String DESPTIPO = "destipo";
 
     public static final String PRUEBAID  = "pruebaID";
     public static final String NUMPRUEBA = "numPrueba";
+    public static final String PRUEBATIP = "codTipo";
 
     public static final String ASIGNATURAID  = "ASIGNATURAID";
     public static final String NOMASIGNATURA = "NOMASIGNATURA";
@@ -51,17 +59,21 @@ public class bdconstants {
     public static final String APEPROFESOR = "apellido";
     public static final String DNIPROFESOR = "dni";
 
-
     public static final String ALUMNOSID = "alumnos";
     public static final String NOMALUMNOS = "nombre";
     public static final String APEALUMNOS = "apellido";
-    public static final String DNIALUMNOS = "dni";
+    public static final String SECALUMNOS = "codSeccion";
 
-
-    public static final String REGISTROID = "registro";
+    public static final String REGISTROID = "idRegistro";
     public static final String REGISTROFECHA = "fecharegistro";
     public static final String REGISTRONOTA = "notas";
+    public static final String REGISTROPROF = "codProf";
+    public static final String REGISTROALUM = "codAlum";
+    public static final String REGISTROASIGN = "codAsign";
+    public static final String REGISTROPRUEB = "codPrueb";
 
+    public static final String DETALLEIDPROF = "codProf";
+    public static final String DETALLEIDASIGN = "codAsign";
 
     public static final String TABLA_USUARIO_SQL =
             "CREATE TABLE   "+ TABLA_USUARIO + "("+
@@ -71,6 +83,11 @@ public class bdconstants {
                     USU_EST + " INTEGER NOT NULL,"+
                     USU_URL + " TEXT NOT NULL," +
                     USU_PERF + " TEXT NOT NULL );";
+
+    public static final String TABLA_USU_SETT_SQL =
+            "CREATE TABLE   "+ TABLA_USUARIO_SETT + "("+
+                    USU_SET_ID + " TEXT NOT NULL," +
+                    USU_SET_VALUE + " INTEGER NOT NULL);";
 
     //TABLA MODALIDAD
     public static final String TABLA_MODALIDAD_SQL =
@@ -82,13 +99,15 @@ public class bdconstants {
     public static final String TABLA_CICLO_SQL =
             "CREATE TABLE   "+ TABLA_CICLO + "("+
                     CICLO_ID + " INTEGER PRIMARY KEY," +
-                    CICLO_DES + " TEXT NOT NULL );";
+                    CICLO_DES + " TEXT NOT NULL,"+
+                    CICLO_MOD + " INTEGER NULL );";
 
     //TABLA SECCION
     public static final String TABLA_SECCION_SQL =
             "CREATE TABLE   "+ TABLA_SECCION + "("+
                     SECCIONID + " INTEGER PRIMARY KEY," +
-                    NOMSECCION + " TEXT NOT NULL );";
+                    NOMSECCION + " TEXT NOT NULL,"+
+                    CICLSECCION +" INTEGER NULL );";
 
     //TABLA TIPO PRUEBA
     public static final String TABLA_TIPOPRUEBA_SQL =
@@ -99,21 +118,22 @@ public class bdconstants {
     //TABLA PRUEBA
     public static final String TABLA_PRUEBA_SQL =
             "CREATE TABLE   "+ TABLA_PRUEBA + "("+
-                    PRUEBAID+ " INTEGER PRIMARY KEY," +
-                    NUMPRUEBA + " TEXT NOT NULL );";
+                    PRUEBAID + " INTEGER PRIMARY KEY," +
+                    NUMPRUEBA + " TEXT NOT NULL," +
+                    PRUEBATIP + " INTEGER NULL );";
 
     //TABLA ASIGNATURA
     public static final String TABLA_ASIGNATURA_SQL =
             "CREATE TABLE   "+ TABLA_ASIGNATURA + "("+
-                    ASIGNATURAID+ " INTEGER PRIMARY KEY," +
+                    ASIGNATURAID+ " TEXT PRIMARY KEY," +
                     NOMASIGNATURA + " TEXT NOT NULL );";
 
 
     public static final String TABLA_PROFESOR_SQL =
             "CREATE TABLE   "+ TABLA_PROFESOR + "("+
                     PROFESORID+ " TEXT PRIMARY KEY," +
-                    NOMPROFESOR + " TEXT NOT NULL"+
-                    APEPROFESOR  + " TEXT NOT NULL"+
+                    NOMPROFESOR + " TEXT NOT NULL,"+
+                    APEPROFESOR  + " TEXT NOT NULL,"+
                     DNIPROFESOR + " TEXT NOT NULL );";
 
 
@@ -121,22 +141,26 @@ public class bdconstants {
     public static final String TABLA_ALUMNOS_SQL =
             "CREATE TABLE   "+ TABLA_ALUMNOS + "("+
                     ALUMNOSID+ " INTEGER PRIMARY KEY," +
-                    NOMALUMNOS + " TEXT NOT NULL"+
-                    APEALUMNOS  + " TEXT NOT NULL"+
-                    DNIALUMNOS + " TEXT NOT NULL );";
+                    NOMALUMNOS + " TEXT NOT NULL,"+
+                    APEALUMNOS  + " TEXT NOT NULL,"+
+                    SECALUMNOS + " INTEGER NULL );";
 
 
 
     public static final String TABLA_REGISTRONOTAS_SQL =
             "CREATE TABLE   "+ TABLA_REGISTRONOTAS + "("+
-                    REGISTROID+ " INTEGER PRIMARY KEY," +
-                    REGISTROFECHA+ "TEXT NOT NULL"+
-                    REGISTRONOTA+ " INTEGER NOT NULL );";
+                    REGISTROID + " INTEGER PRIMARY KEY," +
+                    REGISTRONOTA + " INTEGER NOT NULL," +
+                    REGISTROFECHA + " TEXT NULL,"+
+                    REGISTROPROF + " INTEGER NOT NULL," +
+                    REGISTROALUM + " INTEGER NOT NULL," +
+                    REGISTROASIGN + " INTEGER NOT NULL," +
+                    REGISTROPRUEB + " INTEGER NOT NULL);";
 
-
-
-
-
-
+    //TABLA DETALLE
+    public static final String TABLA_DETALLE_SQL =
+            "CREATE TABLE   "+ TABLA_DETALLEPROFASI + "("+
+                    DETALLEIDPROF+ " TEXT NOT NULL," +
+                    DETALLEIDASIGN + " TEXT NOT NULL );";
 
 }

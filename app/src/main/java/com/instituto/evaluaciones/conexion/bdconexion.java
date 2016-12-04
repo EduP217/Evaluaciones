@@ -54,7 +54,17 @@ public class bdconexion {
         @Override
         public void onCreate(SQLiteDatabase bd) {
             bd.execSQL(bdconstants.TABLA_USUARIO_SQL);
-
+            bd.execSQL(bdconstants.TABLA_USU_SETT_SQL);
+            bd.execSQL(bdconstants.TABLA_PROFESOR_SQL);
+            bd.execSQL(bdconstants.TABLA_ALUMNOS_SQL);
+            bd.execSQL(bdconstants.TABLA_MODALIDAD_SQL);
+            bd.execSQL(bdconstants.TABLA_CICLO_SQL);
+            bd.execSQL(bdconstants.TABLA_SECCION_SQL);
+            bd.execSQL(bdconstants.TABLA_ASIGNATURA_SQL);
+            bd.execSQL(bdconstants.TABLA_TIPOPRUEBA_SQL);
+            bd.execSQL(bdconstants.TABLA_PRUEBA_SQL);
+            bd.execSQL(bdconstants.TABLA_REGISTRONOTAS_SQL);
+            bd.execSQL(bdconstants.TABLA_DETALLE_SQL);
         }
 
         @Override

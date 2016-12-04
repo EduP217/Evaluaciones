@@ -10,7 +10,6 @@ public class BeanModalidad implements Serializable {
     private int modID;
     private String modalidad;
 
-
     public int getModID() {
         return modID;
     }
@@ -25,5 +24,9 @@ public class BeanModalidad implements Serializable {
 
     public void setModalidad(String modalidad) {
         this.modalidad = modalidad;
+    }
+
+    public String toString(){
+        return modalidad;
     }
 }

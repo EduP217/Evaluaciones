@@ -47,7 +47,7 @@
         android:background="@drawable/edit_text_border"
         android:ems="10"
         android:hint="@string/strUsuario"
-        android:inputType="textPersonName"
+        android:inputType="number"
         android:padding="@dimen/edit_text_padding"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 

@@ -30,7 +30,6 @@ public class daoUsuario {
         String where = bdconstants.USU_USU + "= ? and " + bdconstants.USU_PWD + "= ?";
         String[] whereArgs = {userparam,pwdparam};
         Cursor c = bd.getDb().query(bdconstants.TABLA_USUARIO,null,where,whereArgs,null,null,null);
-        Log.i("cantidad",""+c.getCount());
         if(c.getCount()>=1){
             c.moveToFirst();
             bean = new beanUsuario();
@@ -112,5 +111,36 @@ public class daoUsuario {
         bd.closeDB();
     }
 
+    //INSERTAR EN LA BASE DE DATOS SETTINGS
+    public void insertSetting(String codigo){
+        Log.i("daoProfe","Registrando Setting "+codigo);
+        bd.openWriteableDB();
+        String sql = "INSERT INTO "+bdconstants.TABLA_USUARIO_SETT+" values('"+codigo+"',1)";
+        bd.getDb().execSQL(sql);
+        bd.closeDB();
+    }
 
+    public int estadoSetting(String codigo){
+        int estado = 1;
+        bd.openReadableDB();
+        String where = bdconstants.USU_SET_ID + "= ?";
+        String[] whereArgs = {codigo};
+        Cursor c = bd.getDb().query(bdconstants.TABLA_USUARIO_SETT,null,where,whereArgs,null,null,null);
+        if(c.getCount()>=1){
+            c.moveToFirst();
+            estado = c.getInt(1);
+            c.close();
+        }
+        bd.closeDB();
+        return estado;
+    }
+
+    //UPDATE EN LA BASE DE DATOS SETTINGS
+    public void updateSetting(String codigo,int valor){
+        Log.i("daoProfe","Actualizando Setting "+codigo);
+        bd.openWriteableDB();
+        String sql = "UPDATE "+bdconstants.TABLA_USUARIO_SETT+" set "+bdconstants.USU_SET_VALUE+"="+valor+" where "+bdconstants.USU_SET_ID+"='"+codigo+"'";
+        bd.getDb().execSQL(sql);
+        bd.closeDB();
+    }
 }

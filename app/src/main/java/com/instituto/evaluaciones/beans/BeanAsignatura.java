@@ -7,15 +7,15 @@ import java.io.Serializable;
  */
 
 public class BeanAsignatura implements Serializable {
-    private int codAsignatura;
+    private String codAsignatura;
     private String nomAsignatura;
 
 
-    public int getCodAsignatura() {
+    public String getCodAsignatura() {
         return codAsignatura;
     }
 
-    public void setCodAsignatura(int codAsignatura) {
+    public void setCodAsignatura(String codAsignatura) {
         this.codAsignatura = codAsignatura;
     }
 
@@ -25,5 +25,9 @@ public class BeanAsignatura implements Serializable {
 
     public void setNomAsignatura(String nomAsignatura) {
         this.nomAsignatura = nomAsignatura;
+    }
+
+    public String toString(){
+        return nomAsignatura;
     }
 }

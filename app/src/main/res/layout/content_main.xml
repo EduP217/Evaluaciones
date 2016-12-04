@@ -13,10 +13,16 @@
     tools:context="com.instituto.evaluaciones.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-    <ImageView
-        app:srcCompat="@drawable/avatar_user"
+    <FrameLayout
+        android:id="@+id/content_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </FrameLayout>
+
+    <!--ImageView
+        app:srcCompat="@drawable/logo_cibertec"
         android:id="@+id/imgAvatar"
         android:layout_width="300dp"
         android:layout_centerHorizontal="true"
-        android:layout_height="250dp" />
+        android:layout_height="250dp" /-->
 </RelativeLayout>

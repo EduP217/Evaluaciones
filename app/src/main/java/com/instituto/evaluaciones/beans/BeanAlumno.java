@@ -10,7 +10,7 @@ public class BeanAlumno implements Serializable {
     private int codAlumno;
     private String nomAlumno;
     private String apeAlumno;
-    private String dni;
+    private int codSeccion;
 
 
     public int getCodAlumno() {
@@ -37,11 +37,11 @@ public class BeanAlumno implements Serializable {
         this.apeAlumno = apeAlumno;
     }
 
-    public String getDni() {
-        return dni;
+    public int getCodSeccion() {
+        return codSeccion;
     }
 
-    public void setDni(String dni) {
-        this.dni = dni;
+    public void setCodSeccion(int codSeccion) {
+        this.codSeccion = codSeccion;
     }
 }

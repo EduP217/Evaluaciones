@@ -13,7 +13,9 @@ import android.widget.EditText;
 
 import com.instituto.evaluaciones.MainActivity;
 import com.instituto.evaluaciones.R;
+import com.instituto.evaluaciones.beans.BeanProfesor;
 import com.instituto.evaluaciones.beans.beanUsuario;
+import com.instituto.evaluaciones.dao.daoProfesor;
 import com.instituto.evaluaciones.dao.daoUsuario;
 import com.instituto.evaluaciones.util.backgroundWorker;
 
@@ -25,6 +27,7 @@ public class LoginDialog extends DialogFragment {
 
     private static final String TAG = LoginDialog.class.getSimpleName();
     private daoUsuario dao;
+    private daoProfesor daoProf;
 
     public LoginDialog() {
 
@@ -38,6 +41,7 @@ public class LoginDialog extends DialogFragment {
     private AlertDialog createLoginDialogo() {
 
         dao = new daoUsuario(getActivity());
+        daoProf = new daoProfesor(getActivity());
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -60,9 +64,11 @@ public class LoginDialog extends DialogFragment {
                 beanUsuario obj = dao.buscarUsuario(user,pass);
                 if(obj!=null){
                     Log.i("-->"+TAG,"Usuario Local");
+                    BeanProfesor objProf = daoProf.buscarProfesor(obj.getUser());
                     Intent i = new Intent(getActivity(), MainActivity.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                     i.putExtra("obj", obj);
+                    i.putExtra("objProf", objProf);
                     startActivity(i);
                 } else {
                     Log.i("-->"+TAG,"Importando Usuario");
