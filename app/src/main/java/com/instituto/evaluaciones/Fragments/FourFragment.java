@@ -7,8 +7,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
+import androidx.annotation.Nullable;
+import com.google.android.material.snackbar.Snackbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -168,33 +168,28 @@ public class FourFragment extends Fragment implements AdapterView.OnItemSelected
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id2) {
-        switch (parent.getId()) {
-            case R.id.spnCiclo:
-                BeanCiclo beanCicloSelect = (BeanCiclo) parent.getItemAtPosition(position);
-                idciclo = beanCicloSelect.getCicloID();
-                ArrayList<BeanSeccion> arregloSeccion = daociclo.listarSecciones(idciclo);
-                ArrayAdapter<BeanSeccion> adaptador = new ArrayAdapter<BeanSeccion>(getActivity(),android.R.layout.simple_list_item_1,arregloSeccion);
-                spnSeccion.setAdapter(adaptador);
-                break;
-            case R.id.spnAsign:
-                BeanAsignatura beanAsignSelect = (BeanAsignatura) parent.getItemAtPosition(position);
-                idasign = beanAsignSelect.getCodAsignatura();
-                break;
-            case R.id.spnSeccion:
-                BeanSeccion beanSeccionSelect = (BeanSeccion) parent.getItemAtPosition(position);
-                idseccion = beanSeccionSelect.getSeccionID();
-                break;
-            case R.id.spnTipoP:
+
+        if(R.id.spnCiclo == parent.getId()) {
+            BeanCiclo beanCicloSelect = (BeanCiclo) parent.getItemAtPosition(position);
+            idciclo = beanCicloSelect.getCicloID();
+            ArrayList<BeanSeccion> arregloSeccion = daociclo.listarSecciones(idciclo);
+            ArrayAdapter<BeanSeccion> adaptador = new ArrayAdapter<BeanSeccion>(getActivity(), android.R.layout.simple_list_item_1, arregloSeccion);
+            spnSeccion.setAdapter(adaptador);
+        } else if(R.id.spnAsign == parent.getId()) {
+            BeanAsignatura beanAsignSelect = (BeanAsignatura) parent.getItemAtPosition(position);
+            idasign = beanAsignSelect.getCodAsignatura();
+        } else if(R.id.spnSeccion == parent.getId()) {
+            BeanSeccion beanSeccionSelect = (BeanSeccion) parent.getItemAtPosition(position);
+            idseccion = beanSeccionSelect.getSeccionID();
+        } else if(R.id.spnTipoP == parent.getId()) {
                 BeanTipoPrueba beanTipoPrSelect = (BeanTipoPrueba) parent.getItemAtPosition(position);
                 idtipo = beanTipoPrSelect.getTipo();
                 ArrayList<BeanPrueba> arregloNumP = daoprueba.listarNumP(idtipo);
                 ArrayAdapter<BeanPrueba> adaptador2 = new ArrayAdapter<BeanPrueba>(getActivity(),android.R.layout.simple_list_item_1,arregloNumP);
                 spnPrueba.setAdapter(adaptador2);
-                break;
-            case R.id.spnNumP:
-                BeanPrueba beanPruebaSelect = (BeanPrueba) parent.getItemAtPosition(position);
-                idprueba = beanPruebaSelect.getCodPrueba();
-                break;
+        } else if(R.id.spnNumP == parent.getId()) {
+            BeanPrueba beanPruebaSelect = (BeanPrueba) parent.getItemAtPosition(position);
+            idprueba = beanPruebaSelect.getCodPrueba();
         }
     }
 

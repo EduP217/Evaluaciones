@@ -12,6 +12,7 @@
         android:theme="@style/Edu.Theme.NoActionBar">
         <activity
             android:name=".MainActivity"
+            android:exported="true"
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>

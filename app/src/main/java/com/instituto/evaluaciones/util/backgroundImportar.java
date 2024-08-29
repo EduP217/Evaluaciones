@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.support.design.widget.NavigationView;
+import com.google.android.material.navigation.NavigationView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;

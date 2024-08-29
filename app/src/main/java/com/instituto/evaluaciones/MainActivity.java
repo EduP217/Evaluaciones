@@ -9,17 +9,17 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import com.google.android.material.navigation.NavigationView;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -91,13 +91,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (re.getSerializableExtra("obj") != null) {
             usuario = (beanUsuario) re.getSerializableExtra("obj");
             try {
-                FileInputStream is = this.openFileInput(usuario.getUrlImagen());
-                intentImage = BitmapFactory.decodeStream(is);
-                is.close();
+                //FileInputStream is = this.openFileInput(usuario.getUrlImagen());
+                //intentImage = BitmapFactory.decodeStream(is);
+                intentImage = BitmapFactory.decodeResource(getResources(), R.drawable.avatar_admin);
+                imgMenu.setImageBitmap(intentImage);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            imgMenu.setImageBitmap(intentImage);
+
             if(re.getSerializableExtra("objProf")!=null){
                 profesor = (BeanProfesor) re.getSerializableExtra("objProf");
                 txtCodMenu.setText(profesor.getCodProfesor());

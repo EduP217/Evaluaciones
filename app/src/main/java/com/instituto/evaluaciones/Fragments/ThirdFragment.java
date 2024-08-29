@@ -6,7 +6,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -151,33 +151,27 @@ public class ThirdFragment extends Fragment implements AdapterView.OnItemSelecte
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        switch (parent.getId()){
-            case R.id.spnCicloExp:
-                BeanCiclo beanCicloSelect = (BeanCiclo) parent.getItemAtPosition(position);
-                idciclo = beanCicloSelect.getCicloID();
-                ArrayList<BeanModalidad> arregloModalidad = daoMod.listarModalidad(""+beanCicloSelect.getCodMod());
-                ArrayAdapter<BeanModalidad> adaptador = new ArrayAdapter<BeanModalidad>(getActivity(),android.R.layout.simple_list_item_1,arregloModalidad);
-                spnModExp.setAdapter(adaptador);
-                break;
-            case R.id.spnModExp:
-                BeanModalidad beanModSelect = (BeanModalidad) parent.getItemAtPosition(position);
-                idmod = beanModSelect.getModID();
-                break;
-            case R.id.spnCursoExp:
-                BeanAsignatura beanAsignSelect = (BeanAsignatura) parent.getItemAtPosition(position);
-                idasign = beanAsignSelect.getCodAsignatura();
-                break;
-            case R.id.spnTipopExp:
-                BeanTipoPrueba beanTipoPrSelect = (BeanTipoPrueba) parent.getItemAtPosition(position);
-                idtipo = beanTipoPrSelect.getTipo();
-                ArrayList<BeanPrueba> arregloNumP = daoprueba.listarNumP(idtipo);
-                ArrayAdapter<BeanPrueba> adaptador2 = new ArrayAdapter<BeanPrueba>(getActivity(),android.R.layout.simple_list_item_1,arregloNumP);
-                spnNExExp.setAdapter(adaptador2);
-                break;
-            case R.id.spnPruebaExp:
-                BeanPrueba beanPruebaSelect = (BeanPrueba) parent.getItemAtPosition(position);
-                idprueba = beanPruebaSelect.getCodPrueba();
-                break;
+        if(R.id.spnCicloExp == parent.getId()) {
+            BeanCiclo beanCicloSelect = (BeanCiclo) parent.getItemAtPosition(position);
+            idciclo = beanCicloSelect.getCicloID();
+            ArrayList<BeanModalidad> arregloModalidad = daoMod.listarModalidad("" + beanCicloSelect.getCodMod());
+            ArrayAdapter<BeanModalidad> adaptador = new ArrayAdapter<BeanModalidad>(getActivity(), android.R.layout.simple_list_item_1, arregloModalidad);
+            spnModExp.setAdapter(adaptador);
+        } else if(R.id.spnModExp == parent.getId()) {
+            BeanModalidad beanModSelect = (BeanModalidad) parent.getItemAtPosition(position);
+            idmod = beanModSelect.getModID();
+        } else if(R.id.spnCursoExp == parent.getId()) {
+            BeanAsignatura beanAsignSelect = (BeanAsignatura) parent.getItemAtPosition(position);
+            idasign = beanAsignSelect.getCodAsignatura();
+        } else if(R.id.spnTipopExp == parent.getId()) {
+            BeanTipoPrueba beanTipoPrSelect = (BeanTipoPrueba) parent.getItemAtPosition(position);
+            idtipo = beanTipoPrSelect.getTipo();
+            ArrayList<BeanPrueba> arregloNumP = daoprueba.listarNumP(idtipo);
+            ArrayAdapter<BeanPrueba> adaptador2 = new ArrayAdapter<BeanPrueba>(getActivity(), android.R.layout.simple_list_item_1, arregloNumP);
+            spnNExExp.setAdapter(adaptador2);
+        } else if(R.id.spnPruebaExp == parent.getId()) {
+            BeanPrueba beanPruebaSelect = (BeanPrueba) parent.getItemAtPosition(position);
+            idprueba = beanPruebaSelect.getCodPrueba();
         }
     }
 

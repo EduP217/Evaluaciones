@@ -44,4 +44,8 @@ public class BeanProfesor implements Serializable {
         this.dni = dni;
     }
 
+    public String toString(){
+        return this.codProfesor+"-"+this.nomProfesor+"-"+this.apeProfesor+"-"+this.dni;
+    }
+
 }

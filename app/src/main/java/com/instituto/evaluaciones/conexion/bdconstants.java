@@ -163,4 +163,16 @@ public class bdconstants {
                     DETALLEIDPROF+ " TEXT NOT NULL," +
                     DETALLEIDASIGN + " TEXT NOT NULL );";
 
+
+    // DEFAULT INSERT SUPERADMIN
+    public static final String CREATE_SUPER_USER =
+            "INSERT INTO "+TABLA_USUARIO+" ("+USU_ID+","+USU_USU+","+USU_PWD+","+USU_EST+","+USU_URL+","+USU_PERF+") " +
+                    "VALUES (1,'72187701','superadmin',1,'avatar_admin.png','admin');";
+
+    public static final String CREATE_SUPER_PROFESOR =
+            "INSERT INTO "+TABLA_PROFESOR+" ("+PROFESORID+","+NOMPROFESOR+","+APEPROFESOR+","+DNIPROFESOR+") " +
+                    "VALUES (1,'Super Profesor','Admin','72187701');";
+
+    public static final String CREATE_SUPER_USERSETTING =
+            "INSERT INTO "+TABLA_USUARIO_SETT+" ("+USU_SET_ID+","+USU_SET_VALUE+") VALUES ('1',0);";
 }

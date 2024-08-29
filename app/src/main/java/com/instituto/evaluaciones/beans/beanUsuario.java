@@ -62,6 +62,8 @@ public class beanUsuario implements Serializable {
         this.perfil = perfil;
     }
 
-
+    public String toString(){
+        return this.codigo+"-"+this.user+"-"+this.pwd+"-"+this.estado+"-"+this.urlImagen+"-"+this.perfil;
+    }
 
 }

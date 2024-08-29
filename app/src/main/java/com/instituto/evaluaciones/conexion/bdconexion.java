@@ -3,6 +3,7 @@ package com.instituto.evaluaciones.conexion;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 /**
  * Created by eprieto on 31/10/2016.
@@ -65,6 +66,12 @@ public class bdconexion {
             bd.execSQL(bdconstants.TABLA_PRUEBA_SQL);
             bd.execSQL(bdconstants.TABLA_REGISTRONOTAS_SQL);
             bd.execSQL(bdconstants.TABLA_DETALLE_SQL);
+            Log.i("DBHelper.onCreate","CREATE_SUPER_USER: "+bdconstants.CREATE_SUPER_USER);
+            Log.i("DBHelper.onCreate","CREATE_SUPER_PROFESOR: "+bdconstants.CREATE_SUPER_PROFESOR);
+            Log.i("DBHelper.onCreate","CREATE_SUPER_USERSETTING: "+bdconstants.CREATE_SUPER_USERSETTING);
+            bd.execSQL(bdconstants.CREATE_SUPER_USER);
+            bd.execSQL(bdconstants.CREATE_SUPER_PROFESOR);
+            bd.execSQL(bdconstants.CREATE_SUPER_USERSETTING);
         }
 
         @Override

@@ -4,7 +4,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,17 +64,20 @@ public class LoginDialog extends DialogFragment {
                 beanUsuario obj = dao.buscarUsuario(user,pass);
                 if(obj!=null){
                     Log.i("-->"+TAG,"Usuario Local");
+                    Log.i("-->"+TAG,obj.toString());
                     BeanProfesor objProf = daoProf.buscarProfesor(obj.getUser());
+                    Log.i("-->"+TAG,objProf.toString());
                     Intent i = new Intent(getActivity(), MainActivity.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                     i.putExtra("obj", obj);
                     i.putExtra("objProf", objProf);
                     startActivity(i);
-                } else {
-                    Log.i("-->"+TAG,"Importando Usuario");
-                    backgroundWorker backWrk = new backgroundWorker(getActivity());
-                    backWrk.execute(type, user, pass);
+                    return;
                 }
+
+                Log.i("-->"+TAG,"Importando Usuario");
+                backgroundWorker backWrk = new backgroundWorker(getActivity());
+                backWrk.execute(type, user, pass);
             }
         });
 
